@@ -197,7 +197,7 @@ public class Main
 	private void serverStarted(final FMLServerStartedEvent event)
 	{
 		if (sereneSeasonsLoaded)
-			SereneSeasonsModifier.prepareBiomeIdentities();
+			SereneSeasonsModifier.populateBiomeIdentities();
 	}
 	
 	private static DistExecutor.SafeRunnable clientModelSetup()

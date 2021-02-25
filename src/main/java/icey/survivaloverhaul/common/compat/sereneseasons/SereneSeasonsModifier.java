@@ -28,7 +28,7 @@ public class SereneSeasonsModifier extends ModifierBase
 	// This is prone to breaking if Serene Seasons updates how they handle their configuration
 	// But unfortunately it's the only method I can think of since whether a biome is tropical or not
 	// isn't handled by the api
-	public static void prepareBiomeIdentities()
+	public static void populateBiomeIdentities()
 	{
 		try
 		{

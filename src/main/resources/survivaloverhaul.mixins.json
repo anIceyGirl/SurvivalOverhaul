@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "icey.survivaloverhaul.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"refmap": "survivaloverhaul.refmap.json",
+	"mixins": [],
+	"client": [
+		"TestMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"minVersion": "0.8"
+}

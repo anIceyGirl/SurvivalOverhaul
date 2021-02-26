@@ -3,9 +3,11 @@ buildscript {
 	   maven { url = 'https://files.minecraftforge.net/maven' }
 	   jcenter()
 	   mavenCentral()
+       maven {url='https://dist.creeper.host/Sponge/maven'}
     }
     dependencies {
 	   classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+       classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -49,6 +51,7 @@ minecraft {
 		  // Note that this REQUIRES the dependencies' mixin mappings to be
 		  // updated to the latest mappings
 		  property 'mixin.env.disableRefMap', 'true'
+          arg '-mixin.config=' + archivesBaseName + '.mixins.json'
 
 		  mods {
 			 survivaloverhaul {
@@ -65,6 +68,9 @@ minecraft {
 
 		  // Recommended logging level for the console
 		  property 'forge.logging.console.level', 'debug'
+		  
+		  property 'mixin.env.disableRefMap', 'true'
+          arg '-mixin.config=' + archivesBaseName + '.mixins.json'
 
 		  mods {
 			 survivaloverhaul {

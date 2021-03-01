@@ -17,7 +17,6 @@ import net.minecraft.util.text.StringTextComponent;
 
 public class TemperatureCommand extends CommandBase
 {
-	//.executes(src -> new TemperatureCommand().execute(src.getSource())));
 	public TemperatureCommand()
 	{
 		super(Commands.literal("temperature")

@@ -42,7 +42,7 @@ public class SereneSeasonsModifier extends ModifierBase
 		}
 		catch (Exception e)
 		{
-			Main.LOGGER.error("Unknown error while reading Serene Seasons config", e);
+			Main.LOGGER.error("Unknown error while reading Serene Seasons config! Did the config format change?", e);
 		}
 		
 		Main.LOGGER.debug("Got " + biomeIdentities.size() + " entries from Serene Seasons configs");

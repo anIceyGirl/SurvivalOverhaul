@@ -5,7 +5,7 @@
 	"refmap": "survivaloverhaul.refmap.json",
 	"mixins": [],
 	"client": [
-		"TestMixin"
+		"PlayerModelMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -42,6 +42,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.apache.logging.log4j.*;
 
+import icey.survivaloverhaul.api.injury.PlayerCondition;
 import icey.survivaloverhaul.api.temperature.DynamicModifierBase;
 import icey.survivaloverhaul.api.temperature.ModifierBase;
 import icey.survivaloverhaul.api.temperature.TemperatureEnum;
@@ -104,6 +105,7 @@ public class Main
 	
 	public static ForgeRegistry<ModifierBase> MODIFIERS;
 	public static ForgeRegistry<DynamicModifierBase> DYNAMIC_MODIFIERS;
+	public static ForgeRegistry<PlayerCondition> PLAYER_CONDITIONS;
 	
 	//@OnlyIn(Dist.CLIENT)//broke on server, no longer using const :(
 	//public static final KeyBinding KEY_CLIMB = new KeyBinding("key." + MOD_ID + ".grab", GLFW.GLFW_KEY_R, "key.categories.inventory");
@@ -314,5 +316,10 @@ public class Main
 		dynamicModifierBuilder.setName(new ResourceLocation(Main.MOD_ID, "dynamic_modifiers"));
 		dynamicModifierBuilder.setType(DynamicModifierBase.class);
 		DYNAMIC_MODIFIERS = (ForgeRegistry<DynamicModifierBase>) dynamicModifierBuilder.create();
+		
+		RegistryBuilder<PlayerCondition> playerConditionBuilder = new RegistryBuilder<PlayerCondition>();
+		playerConditionBuilder.setName(new ResourceLocation(Main.MOD_ID, "player_conditions"));
+		playerConditionBuilder.setType(PlayerCondition.class);
+		PLAYER_CONDITIONS = (ForgeRegistry<PlayerCondition>) playerConditionBuilder.create();
 	}
 }

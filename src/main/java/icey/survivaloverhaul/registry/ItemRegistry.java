@@ -42,4 +42,6 @@ public class ItemRegistry
 	
 	public static final RegistryObject<Item> COOLING_COIL_ITEM = ITEMS.register("cooling_coil", () -> new BlockItem(BlockRegistry.COOLING_COIL.get(), new Item.Properties().group(ItemGroup.REDSTONE)));
 	public static final RegistryObject<Item> HEATING_COIL_ITEM = ITEMS.register("heating_coil", () -> new BlockItem(BlockRegistry.HEATING_COIL.get(), new Item.Properties().group(ItemGroup.REDSTONE)));
+	
+	public static final RegistryObject<Item> TEMERATURE_SENSOR_ITEM = ITEMS.register("temperature_sensor", () -> new BlockItem(BlockRegistry.TEMERATURE_SENSOR.get(), new Item.Properties().group(ItemGroup.REDSTONE)));
 }

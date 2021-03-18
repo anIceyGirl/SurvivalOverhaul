@@ -1,0 +1,18 @@
+{
+	"variants":
+	{
+		"facing=up,inverted=false": { "model": "survivaloverhaul:block/temperature_sensor" },		
+		"facing=down,inverted=false": { "model": "survivaloverhaul:block/temperature_sensor" },		
+		"facing=south,inverted=false": { "model": "survivaloverhaul:block/temperature_sensor" },		
+		"facing=west,inverted=false": { "model": "survivaloverhaul:block/temperature_sensor" },		
+		"facing=north,inverted=false": { "model": "survivaloverhaul:block/temperature_sensor" },		
+		"facing=east,inverted=false": { "model": "survivaloverhaul:block/temperature_sensor" },
+		
+		"facing=up,inverted=true": { "model": "survivaloverhaul:block/temperature_sensor_invert" },
+		"facing=down,inverted=true": { "model": "survivaloverhaul:block/temperature_sensor_invert" },
+		"facing=south,inverted=true": { "model": "survivaloverhaul:block/temperature_sensor_invert" },		
+		"facing=west,inverted=true": { "model": "survivaloverhaul:block/temperature_sensor_invert" },
+		"facing=north,inverted=true": { "model": "survivaloverhaul:block/temperature_sensor_invert" },
+		"facing=east,inverted=true": { "model": "survivaloverhaul:block/temperature_sensor_invert" }
+	}
+}

@@ -1,5 +1,6 @@
 package icey.survivaloverhaul.api.temperature;
 
+import icey.survivaloverhaul.Main;
 import icey.survivaloverhaul.api.config.json.temperature.JsonBiomeIdentity;
 import icey.survivaloverhaul.config.json.JsonConfig;
 import net.minecraft.entity.player.PlayerEntity;
@@ -107,8 +108,9 @@ public abstract class ModifierBase extends ForgeRegistryEntry<ModifierBase>
 	{
 		// Get the biome's temperature, clamp it between 0 and 1.5,
 		// and then normalize it.
-		
+
 		String name = biome.getRegistryName().toString();
+
 		
 		if (JsonConfig.biomeOverrides.containsKey(name))
 		{

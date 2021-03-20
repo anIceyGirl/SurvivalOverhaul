@@ -1,0 +1,9 @@
+{
+	"parent": "survivaloverhaul:block/temperature_base",
+	"textures": 
+		{
+			"0": "survivaloverhaul:block/tempBlockSideTexture",
+			"1": "survivaloverhaul:block/temptoptextinvert",
+			"particle": "survivaloverhaul:block/tempBlockSideTexture"
+		}
+}

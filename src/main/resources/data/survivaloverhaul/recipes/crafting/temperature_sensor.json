@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#S#",
+        "#S#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "tag": "minecraft:planks"
+        },
+        "S": {
+            "item": "survivaloverhaul:mercury_paste"
+        }
+    },
+    "result": {
+        "item": "survivaloverhaul:temperature_sensor",
+        "count": 1
+    }
+}

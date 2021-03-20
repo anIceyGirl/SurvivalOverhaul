@@ -44,4 +44,6 @@ public class BlockRegistry
 	
 	public static final RegistryObject<Block> HEATING_COIL = BLOCKS.register("heating_coil", () -> new BlockTemperatureCoil(BlockTemperatureCoil.CoilType.HEATING));
 	public static final RegistryObject<Block> COOLING_COIL = BLOCKS.register("cooling_coil", () -> new BlockTemperatureCoil(BlockTemperatureCoil.CoilType.COOLING));
+	
+	public static final RegistryObject<Block> TEMERATURE_SENSOR = BLOCKS.register("temperature_sensor", () -> new BlockTemperatureSensor());
 }

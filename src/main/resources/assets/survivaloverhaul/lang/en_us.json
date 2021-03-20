@@ -23,6 +23,8 @@
 	"block.survivaloverhaul.heating_coil":"Heating Coil",
 	"block.survivaloverhaul.cooling_coil":"Cooling Coil",
 	
+	"block.survivaloverhaul.temperature_sensor":"Temperature Sensor",
+	
 	"item.minecraft.potion.effect.heat_resistance":"Potion of Heat Resistance",
 	"item.minecraft.potion.effect.cold_resistance":"Potion of Cold Resistance",
 	"item.minecraft.potion.effect.heat_resistance_long":"Potion of Heat Resistance",

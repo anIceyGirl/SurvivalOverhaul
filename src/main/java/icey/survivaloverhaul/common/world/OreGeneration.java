@@ -38,7 +38,7 @@ public class OreGeneration
 				event.getGeneration().withFeature(OO.GS, Feature.ORE
 						.withConfiguration(new OreFeatureConfig(OO.FBT, BS.get(i), OO.veinSize))
 						.withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(OO.minHeight, 0, OO.maxHeight))).square()
-						.func_242731_b(OO.amount));
+						.count(OO.amount));
 				Main.LOGGER.debug("build: "+ event.getCategory() + "\nOre: " + BS.get(i).getBlock().getRegistryName());
 			}
 			

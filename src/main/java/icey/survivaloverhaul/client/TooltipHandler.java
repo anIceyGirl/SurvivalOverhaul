@@ -69,7 +69,7 @@ public class TooltipHandler
 				ITextComponent text = new StringTextComponent("+")
 						.mergeStyle(TextFormatting.BLUE)
 						.appendString(tempTxt)
-						.append(tempTranslation);
+						.appendSibling(tempTranslation);
 				
 				tooltip.add(text);
 			}

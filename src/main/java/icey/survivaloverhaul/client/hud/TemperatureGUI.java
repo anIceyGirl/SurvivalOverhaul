@@ -63,10 +63,10 @@ public class TemperatureGUI
 	{
 		if ((event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE || event.getType() == RenderGameOverlayEvent.ElementType.JUMPBAR)
 				&& Config.Baked.temperatureEnabled 
-				&& mc.playerController.gameIsSurvivalOrAdventure())
+				&& mc.gameMode.hasExperience())
 		{
-			int scaledWidth = mc.getMainWindow().getScaledWidth();
-			int scaledHeight = mc.getMainWindow().getScaledHeight();
+			int scaledWidth = mc.getWindow().getGuiScaledWidth();
+			int scaledHeight = mc.getWindow().getGuiScaledHeight();
 			
 			rand.setSeed((long) (updateCounter * 445));
 			
@@ -196,7 +196,7 @@ public class TemperatureGUI
 			icon = icon.getFlashVariant();
 		}
 		
-		Matrix4f m4f = matrix.getLast().getMatrix();
+		Matrix4f m4f = matrix.last().pose();
 		
 		RenderUtil.drawTexturedModelRect(m4f, x + xOffset, y + yOffset, temperatureTextureWidth * icon.getIconIndex(), temperatureTexturePosY, temperatureTextureWidth, temperatureTextureHeight);
 		RenderUtil.drawTexturedModelRect(m4f, x + xOffset, y + yOffset, temperatureTextureWidth * icon.getIconHolder(), temperatureTexturePosY, temperatureTextureWidth, temperatureTextureHeight);
@@ -245,7 +245,7 @@ public class TemperatureGUI
 		int texPosX = wetnessSymbol * wetnessTextureWidth;
 		int texPosY = wetnessTexturePosY + (flashCounter >= 0 ? wetnessTextureHeight : 0);
 		
-		Matrix4f m4f = matrix.getLast().getMatrix();
+		Matrix4f m4f = matrix.last().pose();
 		
 		RenderUtil.drawTexturedModelRect(m4f, x + xOffset, y + yOffset, texPosX, texPosY, wetnessTextureWidth, wetnessTextureHeight);
 		
@@ -256,7 +256,7 @@ public class TemperatureGUI
 	{
 		if (event.phase == TickEvent.Phase.END)
 		{
-			if (!mc.isGamePaused())
+			if (!mc.isPaused())
 			{
 				updateCounter++;
 				
@@ -276,7 +276,7 @@ public class TemperatureGUI
 	
 	private static void bind(ResourceLocation resource)
 	{
-		mc.getTextureManager().bindTexture(resource);
+		mc.getTextureManager().bind(resource);
 	}
 	
 	private enum IconPair

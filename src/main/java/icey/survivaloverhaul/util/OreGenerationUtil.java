@@ -21,7 +21,7 @@ public class OreGenerationUtil
 	 * 
 	 * @param BlockGenaric
 	 */
-	public static void add(BlockGeneric BG) { OreGenerationUtil.add(BG.getDefaultState(), BG.OO); }
+	public static void add(BlockGeneric BG) { OreGenerationUtil.add(BG.defaultBlockState(), BG.OO); }
 	
 	/**
 	 * Adds blockstate to list along with the options associated with that block
@@ -67,7 +67,7 @@ public class OreGenerationUtil
 			//if (N == true)
 				//OO.FBT = FillerBlockType.BASE_STONE_NETHER;
 			//else if (D == true)
-				OO.FBT = FillerBlockType.BASE_STONE_OVERWORLD;
+				OO.FBT = FillerBlockType.NATURAL_STONE;
 		//}
 		//else
 			//Main.LOGGER.error("Cannot have multiple types of dementions selected at the moment");
@@ -89,7 +89,7 @@ public class OreGenerationUtil
 	{
 		public Category[] Biomes;
 		public Decoration GS;
-		public RuleTest FBT = FillerBlockType.BASE_STONE_OVERWORLD;
+		public RuleTest FBT = FillerBlockType.NATURAL_STONE;
 		public int veinSize,minHeight,maxHeight,amount; 
 		
 		/**

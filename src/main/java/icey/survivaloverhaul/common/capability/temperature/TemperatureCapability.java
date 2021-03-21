@@ -154,7 +154,7 @@ public class TemperatureCapability implements ITemperatureCapability
 			
 			TemperatureEnum tempEnum = getTemperatureEnum();
 			
-			if (player.getItemStackFromSlot(EquipmentSlotType.MAINHAND).getItem() == Items.DEBUG_STICK)
+			if (player.getItemBySlot(EquipmentSlotType.MAINHAND).getItem() == Items.DEBUG_STICK)
 					Main.LOGGER.info(tempEnum + ", " + getTemperatureLevel() + " -> " + destinationTemp);
 			
 			if(tempEnum == TemperatureEnum.HEAT_STROKE)
@@ -162,17 +162,17 @@ public class TemperatureCapability implements ITemperatureCapability
 				if(TemperatureEnum.HEAT_STROKE.getMiddle() < getTemperatureLevel() && !player.isSpectator() && !player.isCreative() && !playerIsImmuneToHeat(player))
 				{
 					// Apply hyperthermia
-					player.removePotionEffect(EffectRegistry.HEAT_STROKE.get());
-					player.addPotionEffect(new EffectInstance(EffectRegistry.HEAT_STROKE.get(), 300, 0, false, true));
+					player.removeEffect(EffectRegistry.HEAT_STROKE.get());
+					player.addEffect(new EffectInstance(EffectRegistry.HEAT_STROKE.get(), 300, 0, false, true));
 				}
 			}
 			else if (tempEnum == TemperatureEnum.FROSTBITE)
 			{
-				if(TemperatureEnum.FROSTBITE.getMiddle() >= getTemperatureLevel() && !player.isSpectator() && !player.isCreative() && !player.isPotionActive(EffectRegistry.COLD_RESISTANCE.get()))
+				if(TemperatureEnum.FROSTBITE.getMiddle() >= getTemperatureLevel() && !player.isSpectator() && !player.isCreative() && !player.hasEffect(EffectRegistry.COLD_RESISTANCE.get()))
 				{
 					// Apply hypothermia
-					player.removePotionEffect(EffectRegistry.FROSTBITE.get());
-					player.addPotionEffect(new EffectInstance(EffectRegistry.FROSTBITE.get(), 300, 0, false, true));
+					player.removeEffect(EffectRegistry.FROSTBITE.get());
+					player.addEffect(new EffectInstance(EffectRegistry.FROSTBITE.get(), 300, 0, false, true));
 				}
 			}
 		}
@@ -209,7 +209,7 @@ public class TemperatureCapability implements ITemperatureCapability
 	
 	private boolean playerIsImmuneToHeat(PlayerEntity player)
 	{
-		return player.isPotionActive(EffectRegistry.HEAT_RESISTANCE.get()) || player.isPotionActive(Effects.FIRE_RESISTANCE);
+		return player.hasEffect(EffectRegistry.HEAT_RESISTANCE.get()) || player.hasEffect(Effects.FIRE_RESISTANCE);
 	}
 	
 	private void tickTemperature(int currentTemp, int destination)
@@ -311,7 +311,7 @@ public class TemperatureCapability implements ITemperatureCapability
 			
 			CompoundNBT modifiers = (CompoundNBT) compound.get("temporaryModifiers");
 			
-			for (String entry : modifiers.keySet())
+			for (String entry : modifiers.getAllKeys())
 			{
 				float modTemp = ((CompoundNBT) modifiers.get(entry)).getFloat("temperature");
 				int modDuration = ((CompoundNBT) modifiers.get(entry)).getInt("duration");

@@ -70,14 +70,14 @@ public class GenericMagic extends Enchantment
 	* Returns the minimal value of enchantability needed on the enchantment level passed.
 	*/
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) 
+	public int getMinCost(int enchantmentLevel) 
 	{
 		return EO.minability + enchantmentLevel * EO.minmultiplier;
 	}
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel)
+	public int getMaxCost(int enchantmentLevel)
 	{
-		return this.getMinEnchantability(enchantmentLevel) + EO.maxability;
+		return this.getMinCost(enchantmentLevel) + EO.maxability;
 	}
 	
 	@Override

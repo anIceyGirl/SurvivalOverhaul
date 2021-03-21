@@ -10,33 +10,33 @@ public class ItemGeneric extends Item
 {
 	public ItemGeneric(String name)
 	{
-		super(new Item.Properties().group(ItemGroup.MISC));
+		super(new Item.Properties().tab(ItemGroup.TAB_MISC));
 		this.setRegistryName(Main.MOD_ID, name);
 	}
 	
 	public ItemGeneric(String name, int stacksize)
 	{
-		super(new Item.Properties().group(ItemGroup.MISC).maxStackSize(MathHelper.clamp(stacksize, 1, 64)));
+		super(new Item.Properties().tab(ItemGroup.TAB_MISC).stacksTo(MathHelper.clamp(stacksize, 1, 64)));
 		this.setRegistryName(Main.MOD_ID, name);
 	}
 	
 	public ItemGeneric(String name, ItemGroup group)
 	{
-		super(new Item.Properties().group(group));
+		super(new Item.Properties().tab(group));
 		
 		this.setRegistryName(Main.MOD_ID, name);
 	}
 	
 	public ItemGeneric(String name, ItemGroup group, int stacksize)
 	{
-		super(new Item.Properties().group(group).maxStackSize(MathHelper.clamp(stacksize, 1, 64)));
+		super(new Item.Properties().tab(group).stacksTo(MathHelper.clamp(stacksize, 1, 64)));
 		
 		this.setRegistryName(Main.MOD_ID, name);
 	}
 	
 	public ItemGeneric(String name, boolean hidden, int stacksize)
 	{
-		super(new Item.Properties().maxStackSize(MathHelper.clamp(stacksize, 1, 64)));
+		super(new Item.Properties().stacksTo(MathHelper.clamp(stacksize, 1, 64)));
 		this.setRegistryName(Main.MOD_ID, name);
 	}
 

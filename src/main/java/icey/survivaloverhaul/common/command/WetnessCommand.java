@@ -17,7 +17,7 @@ public class WetnessCommand extends CommandBase
 	public WetnessCommand() 
 	{
 		super(Commands.literal("wetness").requires((p_198521_0_) -> {
-			return p_198521_0_.hasPermissionLevel(2);
+			return p_198521_0_.hasPermission(2);
 		})
 				.then(Commands.literal("set").then(Commands.argument("wetness", IntegerArgumentType.integer(0, WetnessCapability.WETNESS_LIMIT)).executes(src -> new WetnessCommand().set(src.getSource(), IntegerArgumentType.getInteger(src, "wetness")))))
 				.then(Commands.literal("get").executes(src -> new WetnessCommand().get(src.getSource())))
@@ -26,15 +26,15 @@ public class WetnessCommand extends CommandBase
 	
 	private int set(CommandSource src, int wetness) throws CommandSyntaxException 
 	{
-		CapabilityUtil.getWetnessCapability(src.asPlayer()).setWetness(wetness);
+		CapabilityUtil.getWetnessCapability(src.getPlayerOrException()).setWetness(wetness);
 		return 1;
 	}
 	
 	private int get(CommandSource src) throws CommandSyntaxException 
 	{
-		String msg = "Wetness: " + CapabilityUtil.getWetnessCapability(src.asPlayer()).getWetness();
+		String msg = "Wetness: " + CapabilityUtil.getWetnessCapability(src.getPlayerOrException()).getWetness();
 		
-		src.asPlayer().sendMessage(new StringTextComponent((msg)), UUID.randomUUID());
+		src.getPlayerOrException().sendMessage(new StringTextComponent((msg)), UUID.randomUUID());
 		return 1;
 	}
 }

@@ -30,17 +30,17 @@ public final class RenderUtil
 		float z = 0.0f;
 		
 		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferBuilder = tessellator.getBuffer();
+		BufferBuilder bufferBuilder = tessellator.getBuilder();
 		
 		bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-		bufferBuilder.pos(matrix, x, y + height, z)
-				.tex((texX * f), (texY + height) * f1).endVertex();
-		bufferBuilder.pos(matrix, (x + width), y + height, z)
-				.tex((texX + width) * f, (texY + height) * f1).endVertex();
-		bufferBuilder.pos(matrix, (x + width), y, z)
-				.tex((texX + width) * f,(texY * f1)).endVertex();
-		bufferBuilder.pos(matrix, x, y, z)
-				.tex((texX * f), (texY * f1)).endVertex();
-		tessellator.draw();
+		bufferBuilder.vertex(matrix, x, y + height, z)
+				.uv((texX * f), (texY + height) * f1).endVertex();
+		bufferBuilder.vertex(matrix, (x + width), y + height, z)
+				.uv((texX + width) * f, (texY + height) * f1).endVertex();
+		bufferBuilder.vertex(matrix, (x + width), y, z)
+				.uv((texX + width) * f,(texY * f1)).endVertex();
+		bufferBuilder.vertex(matrix, x, y, z)
+				.uv((texX * f), (texY * f1)).endVertex();
+		tessellator.end();
 	}
 }

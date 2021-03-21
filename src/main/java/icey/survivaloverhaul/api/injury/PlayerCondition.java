@@ -11,7 +11,10 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 /**
  * Generic condition that can be used to represent injuries and diseases. <br>
  * These are similar to potion effects; however, they are unable to be cured with milk,
- * and they exclusively effect players.
+ * and they exclusively effect players.<br>
+ * <br>
+ * I'll be honest I'm not too good at writing APIs so please yell at me if there's
+ * a better way to do this
  * @author Icey
  */
 public class PlayerCondition extends ForgeRegistryEntry<PlayerCondition>
@@ -37,7 +40,7 @@ public class PlayerCondition extends ForgeRegistryEntry<PlayerCondition>
 	protected String getOrCreateTranslationKey()
 	{
 		if (this.name == null) 
-			this.name = Util.makeTranslationKey("player_condition", this.getRegistryName());
+			this.name = Util.makeDescriptionId("player_condition", this.getRegistryName());
 		
 		return this.name;
 	}
@@ -57,12 +60,12 @@ public class PlayerCondition extends ForgeRegistryEntry<PlayerCondition>
 		return this instanceof IProgressableCondition;
 	}
 	
-	public void initApply(PlayerEntity player)
+	public void applyCondition(PlayerEntity player)
 	{
 		
 	}
 	
-	public void applyEffect(PlayerEntity player)
+	public void tickCondition(PlayerEntity player)
 	{
 		
 	}

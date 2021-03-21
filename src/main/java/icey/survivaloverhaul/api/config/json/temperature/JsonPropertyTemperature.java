@@ -55,7 +55,7 @@ public class JsonPropertyTemperature
 			
 			if(properties.containsKey(name))
 			{
-				String stateValue = blockState.get(property).toString();
+				String stateValue = blockState.getValue(property).toString();
 				
 				if(!properties.get(name).equals(stateValue))
 				{

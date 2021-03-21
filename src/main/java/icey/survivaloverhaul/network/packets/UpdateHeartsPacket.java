@@ -27,12 +27,12 @@ public class UpdateHeartsPacket
 	
 	public static UpdateHeartsPacket decode(PacketBuffer buffer)
 	{
-		return new UpdateHeartsPacket(buffer.readCompoundTag());
+		return new UpdateHeartsPacket(buffer.readNbt());
 	}
 	
 	public static void encode(UpdateHeartsPacket message, PacketBuffer buffer)
 	{
-		buffer.writeCompoundTag(message.compound);
+		buffer.writeNbt(message.compound);
 	}
 	
 	public static void handle(UpdateHeartsPacket message, Supplier<NetworkEvent.Context> supplier)
@@ -57,7 +57,7 @@ public class UpdateHeartsPacket
 				HeartModifierCapability hearts = player.getCapability(Main.HEART_MOD_CAP).orElse(new HeartModifierCapability());
 				
 				hearts.readNBT(compound);
-				hearts.updateMaxHealth(player.getEntityWorld(), player);
+				hearts.updateMaxHealth(player.getCommandSenderWorld(), player);
 			}
 		};
 	}

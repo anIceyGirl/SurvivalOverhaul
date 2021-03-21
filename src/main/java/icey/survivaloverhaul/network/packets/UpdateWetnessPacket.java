@@ -27,12 +27,12 @@ public class UpdateWetnessPacket
 	
 	public static UpdateWetnessPacket decode(PacketBuffer buffer)
 	{
-		return new UpdateWetnessPacket(buffer.readCompoundTag());
+		return new UpdateWetnessPacket(buffer.readNbt());
 	}
 	
 	public static void encode(UpdateWetnessPacket message, PacketBuffer buffer)
 	{
-		buffer.writeCompoundTag(message.compound);
+		buffer.writeNbt(message.compound);
 	}
 	
 	public static void handle(UpdateWetnessPacket message, Supplier<NetworkEvent.Context> supplier)

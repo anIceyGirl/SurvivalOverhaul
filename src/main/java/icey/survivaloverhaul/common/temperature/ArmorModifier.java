@@ -25,10 +25,10 @@ public class ArmorModifier extends ModifierBase
 	{
 		float value = 0.0f;
 		
-		value += checkArmorSlot(player.getItemStackFromSlot(EquipmentSlotType.HEAD));
-		value += checkArmorSlot(player.getItemStackFromSlot(EquipmentSlotType.CHEST));
-		value += checkArmorSlot(player.getItemStackFromSlot(EquipmentSlotType.LEGS));
-		value += checkArmorSlot(player.getItemStackFromSlot(EquipmentSlotType.FEET));
+		value += checkArmorSlot(player.getItemBySlot(EquipmentSlotType.HEAD));
+		value += checkArmorSlot(player.getItemBySlot(EquipmentSlotType.CHEST));
+		value += checkArmorSlot(player.getItemBySlot(EquipmentSlotType.LEGS));
+		value += checkArmorSlot(player.getItemBySlot(EquipmentSlotType.FEET));
 		
 		return value;
 	}
@@ -39,8 +39,8 @@ public class ArmorModifier extends ModifierBase
 				return 0.0f;
 		
 		float sum = 0.0f;
-		int coolingLevel = EnchantmentHelper.getEnchantmentLevel(EnchantRegistry.COLD_BARRIER.get(), stack);
-		int heatingLevel = EnchantmentHelper.getEnchantmentLevel(EnchantRegistry.THERMAL_BARRIER.get(), stack);
+		int coolingLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantRegistry.COLD_BARRIER.get(), stack);
+		int heatingLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantRegistry.THERMAL_BARRIER.get(), stack);
 		
 		if (coolingLevel > 0 )
 			sum -= coolingLevel * Config.Baked.enchantmentMultiplier;

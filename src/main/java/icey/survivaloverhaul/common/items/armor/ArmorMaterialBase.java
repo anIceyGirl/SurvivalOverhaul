@@ -36,33 +36,33 @@ public class ArmorMaterialBase implements IArmorMaterial
 	}
 	
 	@Override
-	public int getDurability(EquipmentSlotType slotIn)
+	public int getDurabilityForSlot(EquipmentSlotType slotIn)
 	{
 		return (int) (MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor);
 	}
 
 	@Override
-	public int getDamageReductionAmount(EquipmentSlotType slotIn)
+	public int getDefenseForSlot(EquipmentSlotType slotIn)
 	{
 		return this.damageReductionAmountArray[slotIn.getIndex()];
 	}
 
 	@Override
-	public int getEnchantability()
+	public int getEnchantmentValue()
 	{
 		return this.enchantability;
 	}
 
 	@Override
-	public SoundEvent getSoundEvent()
+	public SoundEvent getEquipSound()
 	{
 		return this.soundEvent;
 	}
 
 	@Override
-	public Ingredient getRepairMaterial()
+	public Ingredient getRepairIngredient()
 	{
-		return this.repairMaterial.getValue();
+		return this.repairMaterial.get();
 	}
 
 	@Override

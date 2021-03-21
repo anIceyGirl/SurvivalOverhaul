@@ -16,7 +16,7 @@ public class OnFireModifier extends ModifierBase
 	@Override
 	public float getPlayerInfluence(PlayerEntity player)
 	{
-		if (player.getFireTimer() > 0)
+		if (player.getRemainingFireTicks() > 0)
 		{
 			return (float) Config.Baked.onFireModifier;
 		}

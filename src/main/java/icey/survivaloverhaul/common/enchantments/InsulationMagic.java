@@ -23,7 +23,7 @@ public class InsulationMagic extends GenericMagic
 	}
 	
 	@Override
-	public boolean isTreasureEnchantment()
+	public boolean isTreasureOnly()
 	{
 		if (this.magicType == MagicType.Both)
 			return true;
@@ -49,7 +49,7 @@ public class InsulationMagic extends GenericMagic
 	}
 	
 	@Override
-	protected boolean canApplyTogether(Enchantment ench) 
+	protected boolean checkCompatibility(Enchantment ench) 
 	{
 		if (ench instanceof InsulationMagic)
 		{

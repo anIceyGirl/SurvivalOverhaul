@@ -14,34 +14,34 @@ public final class WorldUtil
 	
 	public static BlockPos getSidedBlockPos(World world, Entity entity)
 	{
-		if(!world.isRemote)
+		if(!world.isClientSide)
 		{
-			return entity.getPosition();
+			return entity.blockPosition();
 		}
 		
 		if(entity instanceof PlayerEntity)
 		{
-			return new BlockPos(entity.getPositionVec().add(0, 0.5d, 0));
+			return new BlockPos(entity.position().add(0, 0.5d, 0));
 		}
 		else if(entity instanceof ItemFrameEntity)
 		{
-			return new BlockPos(entity.getPositionVec().add(0, -0.45d, 0));
+			return new BlockPos(entity.position().add(0, -0.45d, 0));
 		}
 		else
 		{
-			return entity.getPosition();
+			return entity.blockPosition();
 		}
 	}
 	
 	public static boolean isChunkLoaded(World world, BlockPos pos)
 	{
-		if(world.isRemote)
+		if(world.isClientSide)
 		{
 			return true;
 		}
 		else
 		{
-			return ((ServerWorld) world).getChunkProvider().chunkExists(pos.getX() >> 4, pos.getZ() >> 4);
+			return ((ServerWorld) world).getChunkSource().hasChunk(pos.getX() >> 4, pos.getZ() >> 4);
 		}
 	}
 	

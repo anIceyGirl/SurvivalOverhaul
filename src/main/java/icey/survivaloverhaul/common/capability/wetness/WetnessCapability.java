@@ -76,23 +76,23 @@ public class WetnessCapability
 			return;
 		}
 		
-		BlockPos pos = player.getPosition();
+		BlockPos pos = player.blockPosition();
 		
 		// If the player is in a boat, shift the position used for calculations up by one block
 		// This way, sitting in a boat that's floating on the water won't increase a player's wetness
-		if (player.getRidingEntity() instanceof BoatEntity && !player.getRidingEntity().isAirBorne)
+		if (player.getVehicle() instanceof BoatEntity && !player.getVehicle().hasImpulse)
 		{
-			pos = pos.up();
+			pos = pos.above();
 		}
 		
-		if (this.wetness > 0 && (world.getFluidState(pos).isEmpty() || world.getFluidState(pos.up()).isEmpty()))
+		if (this.wetness > 0 && (world.getFluidState(pos).isEmpty() || world.getFluidState(pos.above()).isEmpty()))
 			worldParticles(player, world);
 		
 		// Only tick wetness every 4 ticks
-		if (world.getWorldInfo().getGameTime() % 4 != 0)
+		if (world.getLevelData().getGameTime() % 4 != 0)
 			return;
 		
-		if (player.getFireTimer() > 0 && !player.isImmuneToFire())
+		if (player.getRemainingFireTicks() > 0 && !player.fireImmune())
 			this.addWetness(-10);
 		
 		if (world.isRainingAt(pos))
@@ -109,17 +109,17 @@ public class WetnessCapability
 				return;
 			}
 			
-			Fluid fluid = fluidState.getFluid();
+			Fluid fluid = fluidState.getType();
 			
-			float fractionalLevel = MathUtil.invLerp(1, 8, fluidState.getLevel());
+			float fractionalLevel = MathUtil.invLerp(1, 8, fluidState.getAmount());
 			
-			if (((float) player.getPositionVec().getY()) > ((float) pos.getY()) + fractionalLevel + 0.0625f)
+			if (((float) player.position().y()) > ((float) pos.getY()) + fractionalLevel + 0.0625f)
 				return;
 			
 			// If/Else chains are frowned upon, i know, but just bear with me please
 			if (fluid instanceof ForgeFlowingFluid)
 			{
-				ForgeFlowingFluid forgeFluid = (ForgeFlowingFluid) fluidState.getFluid();
+				ForgeFlowingFluid forgeFluid = (ForgeFlowingFluid) fluidState.getType();
 				
 				if (forgeFluid.getAttributes().isGaseous())
 				{
@@ -156,13 +156,13 @@ public class WetnessCapability
 	
 	private void worldParticles(PlayerEntity player, World world)
 	{
-		Vector3d pos = player.getPositionVec();
+		Vector3d pos = player.position();
 		AxisAlignedBB box = player.getBoundingBox();
 		
 		int particleSpawnRate = Math.round((1.0f - MathUtil.invLerp(0, WETNESS_LIMIT, this.wetness)) * 10f);
 		
-		if (particleSpawnRate == 0 || world.getWorldInfo().getGameTime() % particleSpawnRate == 0)
-			((ServerWorld) world).spawnParticle(ParticleTypes.FALLING_WATER, pos.x, pos.y + (box.getYSize()/2), pos.z, 1, box.getXSize()/3, box.getYSize()/4,box.getZSize()/3, 0);
+		if (particleSpawnRate == 0 || world.getLevelData().getGameTime() % particleSpawnRate == 0)
+			((ServerWorld) world).sendParticles(ParticleTypes.FALLING_WATER, pos.x, pos.y + (box.getYsize()/2), pos.z, 1, box.getXsize()/3, box.getYsize()/4,box.getZsize()/3, 0);
 	}
 	
 	public boolean isDirty()

@@ -24,7 +24,7 @@ public class SOCommand extends CommandBase
 		
 		String msg = "Survival Overhual V. " + info.getVersion() + "\n" + info.getDescription();
 		
-		src.asPlayer().sendMessage(new StringTextComponent((msg)), UUID.randomUUID());
+		src.getPlayerOrException().sendMessage(new StringTextComponent((msg)), UUID.randomUUID());
 		
 		return 1;
 	}

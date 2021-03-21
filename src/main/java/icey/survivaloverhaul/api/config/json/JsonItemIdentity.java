@@ -42,7 +42,7 @@ public class JsonItemIdentity
 			{
 				try
 				{
-					this.compound = JsonToNBT.getTagFromJson(nbt);
+					this.compound = JsonToNBT.parseTag(nbt);
 					
 					if(this.compound == null)
 					{
@@ -98,7 +98,7 @@ public class JsonItemIdentity
 			return false;
 		}
 		
-		for (String key : selfCompound.keySet())
+		for (String key : selfCompound.getAllKeys())
 		{
 			INBT a = selfCompound.get(key);
 			INBT b = stackCompound.get(key);

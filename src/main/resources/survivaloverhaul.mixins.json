@@ -4,9 +4,7 @@
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "survivaloverhaul.refmap.json",
 	"mixins": [],
-	"client": [
-		"PlayerModelMixin"
-	],
+	"client": [],
 	"injectors": {
 		"defaultRequire": 1
 	},

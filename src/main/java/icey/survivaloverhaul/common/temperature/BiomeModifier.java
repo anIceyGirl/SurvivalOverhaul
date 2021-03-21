@@ -34,11 +34,11 @@ public class BiomeModifier extends ModifierBase
 		
 		float biomeAverage = 0f;
 		
-		long worldTime = world.getWorldInfo().getDayTime() % 24000;
+		long worldTime = world.getLevelData().getDayTime() % 24000;
 		
 		for (Vector3i offset : posOffsets)
 		{
-			Biome biome = world.getBiome(pos.add(offset));
+			Biome biome = world.getBiome(pos.offset(offset));
 			float humidity = biome.getDownfall();
 			float addedTemperature = getTempForBiome(biome);
 			
@@ -49,7 +49,7 @@ public class BiomeModifier extends ModifierBase
 				humidity = JsonConfig.biomeOverrides.get(biomeName).isDry ? 0.1f : 0.5f;
 			}
 			
-			if (humidity < 0.2f && worldTime > 12000 && addedTemperature > 0.85f && !world.getDimensionType().getHasCeiling())
+			if (humidity < 0.2f && worldTime > 12000 && addedTemperature > 0.85f && !world.dimensionType().hasCeiling())
 			{
 				// Deserts are cold at night since heat isn't kept by moisture in the air
 				biomeAverage += (addedTemperature / 5f);

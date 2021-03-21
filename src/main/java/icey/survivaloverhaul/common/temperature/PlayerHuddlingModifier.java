@@ -24,14 +24,14 @@ public class PlayerHuddlingModifier extends ModifierBase
 		if (Config.Baked.playerHuddlingRadius == 0 || Config.Baked.playerHuddlingModifier == 0.0d)
 			return 0.0f;
 		
-		World world = player.getEntityWorld();
-		BlockPos pos = player.getPosition();
+		World world = player.getCommandSenderWorld();
+		BlockPos pos = player.blockPosition();
 		
 		int huddleRadius = Config.Baked.playerHuddlingRadius;
 		
-		AxisAlignedBB bounds = new AxisAlignedBB(pos.add(-huddleRadius, -huddleRadius, -huddleRadius), pos.add(huddleRadius, huddleRadius, huddleRadius));
+		AxisAlignedBB bounds = new AxisAlignedBB(pos.offset(-huddleRadius, -huddleRadius, -huddleRadius), pos.offset(huddleRadius, huddleRadius, huddleRadius));
 		
-		List<Entity> entities = world.getEntitiesInAABBexcluding(player, bounds, null);
+		List<Entity> entities = world.getEntities(player, bounds, null);
 		
 		int playerCount = 0;
 		

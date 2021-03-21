@@ -31,12 +31,12 @@ public class BlockTemperatureCoil extends Block implements IWaterLoggable
 	
 	private static final VoxelShape[] SHAPES = new VoxelShape[]
 			{
-					Block.makeCuboidShape(4.25d, 0.0d, 4.25d, 11.75d, 16.0d, 11.75d), // DOWN
-					Block.makeCuboidShape(4.25d, 0.0d, 4.25d, 11.75d, 16.0d, 11.75d), // UP
-					Block.makeCuboidShape(4.25d, 4.25d, 0.0d, 11.75d, 11.75d, 16.0d), // NORTH
-					Block.makeCuboidShape(4.25d, 4.25d, 0.0d, 11.75d, 11.75d, 16.0d), // SOUTH
-					Block.makeCuboidShape(0.0d, 4.25d, 4.25d, 16.0d,  11.75d, 11.75d), // WEST
-					Block.makeCuboidShape(0.0d, 4.25d, 4.25d, 16.00d, 11.75d, 11.75d), // EAST
+					Block.box(4.25d, 0.0d, 4.25d, 11.75d, 16.0d, 11.75d), // DOWN
+					Block.box(4.25d, 0.0d, 4.25d, 11.75d, 16.0d, 11.75d), // UP
+					Block.box(4.25d, 4.25d, 0.0d, 11.75d, 11.75d, 16.0d), // NORTH
+					Block.box(4.25d, 4.25d, 0.0d, 11.75d, 11.75d, 16.0d), // SOUTH
+					Block.box(0.0d, 4.25d, 4.25d, 16.0d,  11.75d, 11.75d), // WEST
+					Block.box(0.0d, 4.25d, 4.25d, 16.00d, 11.75d, 11.75d), // EAST
 			};
 	
 	public final CoilType coilType;
@@ -44,29 +44,29 @@ public class BlockTemperatureCoil extends Block implements IWaterLoggable
 	public BlockTemperatureCoil(CoilType coilType)
 	{
 		super(AbstractBlock.Properties
-				.create(Material.IRON)
-				.hardnessAndResistance(4.0f, 10.0f)
+				.of(Material.METAL)
+				.strength(4.0f, 10.0f)
 				.harvestTool(ToolType.PICKAXE)
 				.harvestLevel(1)
-				.notSolid());
+				.noOcclusion());
 		this.coilType = coilType;
 		
-		this.setDefaultState(this.stateContainer.getBaseState()
-				.with(DIRECTION, Direction.DOWN)
-				.with(POWERED, Boolean.valueOf(false))
-				.with(WATERLOGGED, Boolean.valueOf(false)));
+		this.registerDefaultState(this.stateDefinition.any()
+				.setValue(DIRECTION, Direction.DOWN)
+				.setValue(POWERED, Boolean.valueOf(false))
+				.setValue(WATERLOGGED, Boolean.valueOf(false)));
 	}
 	
 	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving)
 	{
-		if (!worldIn.isRemote)
+		if (!worldIn.isClientSide)
 		{
-			boolean powered = worldIn.isBlockPowered(pos);
-			boolean enabled = state.get(POWERED);
+			boolean powered = worldIn.hasNeighborSignal(pos);
+			boolean enabled = state.getValue(POWERED);
 			
 			if (enabled && !powered)
 			{
-				worldIn.getPendingBlockTicks().scheduleTick(pos, this, 4);
+				worldIn.getBlockTicks().scheduleTick(pos, this, 4);
 			}
 			else if (!enabled && powered)
 			{
@@ -77,7 +77,7 @@ public class BlockTemperatureCoil extends Block implements IWaterLoggable
 	
 	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand)
 	{
-		if (state.get(POWERED) && !worldIn.isBlockPowered(pos))
+		if (state.getValue(POWERED) && !worldIn.hasNeighborSignal(pos))
 		{
 			turnOff(worldIn, pos, state);
 		}
@@ -85,33 +85,33 @@ public class BlockTemperatureCoil extends Block implements IWaterLoggable
 	
 	private void turnOff(final World world, final BlockPos pos, final BlockState state)
 	{
-		world.setBlockState(pos, state.with(POWERED, false));
+		world.setBlockAndUpdate(pos, state.setValue(POWERED, false));
 	}
 	
 	private void turnOn(final World world, final BlockPos pos, final BlockState state)
 	{
-		world.setBlockState(pos, state.with(POWERED, true));
+		world.setBlockAndUpdate(pos, state.setValue(POWERED, true));
 	}
 	
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
-		return this.getDefaultState().with(DIRECTION, context.getFace().getOpposite()).with(POWERED, context.getWorld().isBlockPowered(context.getPos()));
+		return this.defaultBlockState().setValue(DIRECTION, context.getClickedFace().getOpposite()).setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
 	}
 	
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(DIRECTION, POWERED, WATERLOGGED);
 	}
 	
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
 	{
-		return SHAPES[state.get(DIRECTION).getIndex()];
+		return SHAPES[state.getValue(DIRECTION).get3DDataValue()];
 	}
 	
 	@SuppressWarnings("deprecation")
 	public FluidState getFluidState(BlockState state)
 	{
-		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 	
 	public enum CoilType

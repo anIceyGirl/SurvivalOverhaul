@@ -46,7 +46,7 @@ public class HeartModifierCapability implements IHeartModifierCapability
             health.removeModifier(modifier);
         }
         
-        health.applyPersistentModifier(new AttributeModifier(HEART_MODIFIER_ATTRIBUTE, Main.MOD_ID + ":extra_hearts", extraHearts * 2, AttributeModifier.Operation.ADDITION));
+        health.addPermanentModifier(new AttributeModifier(HEART_MODIFIER_ATTRIBUTE, Main.MOD_ID + ":extra_hearts", extraHearts * 2, AttributeModifier.Operation.ADDITION));
 	}
 	
 	public void setMaxHealth(int extraHearts)

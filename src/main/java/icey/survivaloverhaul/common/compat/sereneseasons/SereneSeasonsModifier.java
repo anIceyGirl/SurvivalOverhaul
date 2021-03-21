@@ -99,8 +99,8 @@ public class SereneSeasonsModifier extends ModifierBase
 		
 		for (Vector3i offset : posOffsets)
 		{
-			Biome biome = world.getBiome(pos.add(offset));
-			float temperature = biome.getTemperature();
+			Biome biome = world.getBiome(pos.offset(offset));
+			float temperature = biome.getBaseTemperature();
 			
 			boolean useTropicalMods;
 			

@@ -35,15 +35,16 @@ public class OreGeneration
 					noload = true;
 			if (noload == false)// might make it so you can apply your own builder for each block else apply default builder  
 			{
-				event.getGeneration().withFeature(OO.GS, Feature.ORE
-						.withConfiguration(new OreFeatureConfig(OO.FBT, BS.get(i), OO.veinSize))
-						.withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(OO.minHeight, 0, OO.maxHeight))).square()
+				event.getGeneration().addFeature(OO.GS, Feature.ORE
+						.configured(new OreFeatureConfig(OO.FBT, BS.get(i), OO.veinSize))
+						.decorated(Placement.RANGE.configured(new TopSolidRangeConfig(OO.minHeight, 0, OO.maxHeight))).squared()
 						.count(OO.amount));
 				Main.LOGGER.debug("build: "+ event.getCategory() + "\nOre: " + BS.get(i).getBlock().getRegistryName());
 			}
 			
 		}
 	}
+	
 	public static void register() //could move this
 	{
 			OreGenerationUtil.add(BlockRegistry.CINNABAR_ORE.get());

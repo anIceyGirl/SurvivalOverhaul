@@ -43,8 +43,8 @@ public class LootTableInjectors
 	
 	public static LootPool getInjectPool(String entryName)
 	{
-		return LootPool.builder()
-				.addEntry(getInjectEntry(entryName))
+		return LootPool.lootPool()
+				.add(getInjectEntry(entryName))
 				.name("survivaloverhaul_inject")
 				.build();
 	}
@@ -52,6 +52,6 @@ public class LootTableInjectors
 	private static LootEntry.Builder<?> getInjectEntry(String name)
 	{
 		ResourceLocation table = new ResourceLocation(Main.MOD_ID, "inject/" + name);
-		return TableLootEntry.builder(table).weight(1);
+		return TableLootEntry.lootTableReference(table).setWeight(1);
 	}
 }

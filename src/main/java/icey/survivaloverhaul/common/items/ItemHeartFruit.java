@@ -21,29 +21,29 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 public class ItemHeartFruit extends Item
 {
-	public static final Food FOOD_STATS = (new Food.Builder()).hunger(6).saturation(2.5f).setAlwaysEdible().build();
+	public static final Food FOOD_STATS = (new Food.Builder()).nutrition(6).saturationMod(2.5f).alwaysEat().build();
 	
 	public ItemHeartFruit()
 	{
-		super(new Item.Properties().group(ItemGroup.FOOD).rarity(Rarity.RARE).food(FOOD_STATS));
+		super(new Item.Properties().tab(ItemGroup.TAB_FOOD).rarity(Rarity.RARE).food(FOOD_STATS));
 	}
 	
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entity)
+	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entity)
 	{
 		if (entity instanceof PlayerEntity && Config.Baked.heartFruitsEnabled)
 		{
 			PlayerEntity player = (PlayerEntity) entity;
 			HeartModifierCapability cap = CapabilityUtil.getHeartModCapability(player);
 			
-			if (!world.isRemote)
+			if (!world.isClientSide)
 			{
 				cap.addMaxHealth(Config.Baked.additionalHeartsPerFruit);
 				cap.updateMaxHealth(world, player);
 				
 				if (Config.Baked.heartFruitsGiveRegen)
 				{
-					player.addPotionEffect(new EffectInstance(Effects.REGENERATION, 200, 1));
+					player.addEffect(new EffectInstance(Effects.REGENERATION, 200, 1));
 				}
 			}
 			
@@ -55,7 +55,7 @@ public class ItemHeartFruit extends Item
 			}
 		}
 		
-		return entity.onFoodEaten(world, stack);
+		return entity.eat(world, stack);
 	}
 	
 }

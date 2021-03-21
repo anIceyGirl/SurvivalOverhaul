@@ -37,7 +37,7 @@ public class BlockTemperatureSensor extends Block
 	
 	private static final VoxelShape[] SHAPES = new VoxelShape[]
 			{
-					Block.makeCuboidShape(0d, 0d, 0d, 16d, 8d, 16d), // DOWN
+					Block.box(0d, 0d, 0d, 16d, 8d, 16d), // DOWN
 					//Block.makeCuboidShape(1,2,3,4,5,6), // UP
 					//Block.makeCuboidShape(1,2,3,4,5,6), // NORTH
 					//Block.makeCuboidShape(1,2,3,4,5,6), // SOUTH
@@ -47,8 +47,8 @@ public class BlockTemperatureSensor extends Block
 
 	public BlockTemperatureSensor() 
 	{
-		super(AbstractBlock.Properties.create(Material.WOOD).zeroHardnessAndResistance().notSolid());
-		this.setDefaultState(this.stateContainer.getBaseState().with(DIRECTION, Direction.DOWN).with(INVERTED, Boolean.valueOf(false)));
+		super(AbstractBlock.Properties.of(Material.WOOD).instabreak().noOcclusion());
+		this.registerDefaultState(this.stateDefinition.any().setValue(DIRECTION, Direction.DOWN).setValue(INVERTED, Boolean.valueOf(false)));
 	}
 	
 	@Override
@@ -58,7 +58,7 @@ public class BlockTemperatureSensor extends Block
 		{
 			int templ = 0;
 			//should give an option for a binary response
-			if (!state.get(INVERTED)) //false
+			if (!state.getValue(INVERTED)) //false
 				templ = TemperatureUtil.clampTemperature(TemperatureUtil.getWorldTemperature(worldIn, pos)) / 2;
 			else
 				templ = 15 / TemperatureUtil.clampTemperature(TemperatureUtil.getWorldTemperature(worldIn, pos));
@@ -66,11 +66,11 @@ public class BlockTemperatureSensor extends Block
 			if (temperature != templ) 
 			{
 				temperature = templ;
-				Blocks.REDSTONE_WIRE.getDefaultState().neighborChanged(worldIn, pos, getSelf(), pos, false);//possibly not efficient
+				Blocks.REDSTONE_WIRE.defaultBlockState().neighborChanged(worldIn, pos, asBlock(), pos, false);//possibly not efficient
 				//System.out.println("Change Temp");
 			}
 			
-			worldIn.getPendingBlockTicks().scheduleTick(pos, this, 15);
+			worldIn.getBlockTicks().scheduleTick(pos, this, 15);
 		}
 		catch(Exception e) 
 		{
@@ -79,13 +79,13 @@ public class BlockTemperatureSensor extends Block
 	}
 	
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) 
 	{
 		builder.add(DIRECTION).add(INVERTED);
 	}
 	
 	@Override
-	public boolean canProvidePower (BlockState state) 
+	public boolean isSignalSource (BlockState state) 
 	{    
         return true;
     }
@@ -97,36 +97,36 @@ public class BlockTemperatureSensor extends Block
 	}
 	
 	@Override
-    public int getWeakPower (BlockState state, IBlockReader blockAccess, BlockPos pos, Direction side) 
+    public int getSignal (BlockState state, IBlockReader blockAccess, BlockPos pos, Direction side) 
 	{
         return temperature;
     }
 	
 	@Override
-    public int getStrongPower (BlockState state, IBlockReader blockAccess, BlockPos pos, Direction side) 
+    public int getDirectSignal (BlockState state, IBlockReader blockAccess, BlockPos pos, Direction side) 
 	{
         return temperature;
     }
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) 
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) 
 	{
 		
 		//server only?
-		if (state.get(INVERTED))//true
-			worldIn.setBlockState(pos, state.with(INVERTED, false));
+		if (state.getValue(INVERTED))//true
+			worldIn.setBlockAndUpdate(pos, state.setValue(INVERTED, false));
 		else
-			worldIn.setBlockState(pos, state.with(INVERTED, true));
+			worldIn.setBlockAndUpdate(pos, state.setValue(INVERTED, true));
 		//System.out.println("INVERTED");
 		return ActionResultType.SUCCESS;
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) 
+	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) 
 	{	//something here is null on server when getWorldTemperature is called (same in tick). guessing pos?
 		try 
 		{
 			temperature = TemperatureUtil.clampTemperature(TemperatureUtil.getWorldTemperature(worldIn, pos)) / 2;
-			worldIn.getPendingBlockTicks().scheduleTick(pos, this, 15);
+			worldIn.getBlockTicks().scheduleTick(pos, this, 15);
 		}
 		catch(Exception e) 
 		{

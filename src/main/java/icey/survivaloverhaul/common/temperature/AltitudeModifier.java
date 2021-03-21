@@ -15,7 +15,7 @@ public class AltitudeModifier extends ModifierBase
 	@Override
 	public float getWorldInfluence(World world, BlockPos pos)
 	{
-		if (world.getDimensionType().getHasCeiling())
+		if (world.dimensionType().hasCeiling())
 		{
 			return 0.0f;
 		}

@@ -20,10 +20,10 @@ public class AdaptiveEnchantmentModifier extends DynamicModifierBase
 	{
 		float value = 0.0f;
 		
-		value += checkArmorSlot(player.getItemStackFromSlot(EquipmentSlotType.HEAD), currentTemperature);
-		value += checkArmorSlot(player.getItemStackFromSlot(EquipmentSlotType.CHEST), currentTemperature);
-		value += checkArmorSlot(player.getItemStackFromSlot(EquipmentSlotType.LEGS), currentTemperature);
-		value += checkArmorSlot(player.getItemStackFromSlot(EquipmentSlotType.FEET), currentTemperature);
+		value += checkArmorSlot(player.getItemBySlot(EquipmentSlotType.HEAD), currentTemperature);
+		value += checkArmorSlot(player.getItemBySlot(EquipmentSlotType.CHEST), currentTemperature);
+		value += checkArmorSlot(player.getItemBySlot(EquipmentSlotType.LEGS), currentTemperature);
+		value += checkArmorSlot(player.getItemBySlot(EquipmentSlotType.FEET), currentTemperature);
 		
 		return value;
 	}
@@ -35,7 +35,7 @@ public class AdaptiveEnchantmentModifier extends DynamicModifierBase
 		
 		float sum = 0.0f;
 		
-		int adaptiveLevel = EnchantmentHelper.getEnchantmentLevel(EnchantRegistry.ADAPTIVE_BARRIER.get(), stack);
+		int adaptiveLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantRegistry.ADAPTIVE_BARRIER.get(), stack);
 		
 		if (adaptiveLevel > 0) 
 		{

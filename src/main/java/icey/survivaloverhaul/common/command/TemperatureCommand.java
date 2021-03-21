@@ -21,7 +21,7 @@ public class TemperatureCommand extends CommandBase
 	{
 		super(Commands.literal("temperature")
 				.requires((p_198521_0_) -> {
-					return p_198521_0_.hasPermissionLevel(2);
+					return p_198521_0_.hasPermission(2);
 				})
 				.then(Commands.literal("set").then(Commands.argument("Temperature", IntegerArgumentType.integer(0,30)).executes(src ->  new TemperatureCommand().set(src.getSource(), IntegerArgumentType.getInteger(src, "Temperature")))))
 				.then(Commands.literal("get").executes(src -> new TemperatureCommand().execute(src.getSource())))
@@ -35,15 +35,15 @@ public class TemperatureCommand extends CommandBase
 		{
 			if (source.getEntity() instanceof PlayerEntity)
 			{
-				float targetTemperature = TemperatureUtil.getPlayerTargetTemperature(source.asPlayer());
-				TemperatureCapability cap = CapabilityUtil.getTempCapability(source.asPlayer());
+				float targetTemperature = TemperatureUtil.getPlayerTargetTemperature(source.getPlayerOrException());
+				TemperatureCapability cap = CapabilityUtil.getTempCapability(source.getPlayerOrException());
 				int playerTemp = cap.getTemperatureLevel();
 			
 				String reply1 = "Temp: "+  playerTemp,
 				reply2 = "Target Temp: " + targetTemperature;
 				
-				source.asPlayer().sendMessage(new StringTextComponent((reply1)), UUID.randomUUID());
-				source.asPlayer().sendMessage(new StringTextComponent((reply2)), UUID.randomUUID());
+				source.getPlayerOrException().sendMessage(new StringTextComponent((reply1)), UUID.randomUUID());
+				source.getPlayerOrException().sendMessage(new StringTextComponent((reply2)), UUID.randomUUID());
 			}
 		}
 		catch(Exception e) 
@@ -54,7 +54,7 @@ public class TemperatureCommand extends CommandBase
 	}
 	private int set(CommandSource src, int temp) throws CommandSyntaxException  
 	{
-		CapabilityUtil.getTempCapability(src.asPlayer()).setTemperatureLevel(temp);
+		CapabilityUtil.getTempCapability(src.getPlayerOrException()).setTemperatureLevel(temp);
 		return Command.SINGLE_SUCCESS;
 	}
 }

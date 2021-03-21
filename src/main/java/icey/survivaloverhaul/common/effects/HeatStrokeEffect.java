@@ -17,22 +17,22 @@ public class HeatStrokeEffect extends GenericEffect
 	}
 	
 	@Override
-	public void performEffect(LivingEntity entity, int amplifier)
+	public void applyEffectTick(LivingEntity entity, int amplifier)
 	{
-		if(entity instanceof PlayerEntity && !entity.isPotionActive(EffectRegistry.HEAT_RESISTANCE.get()))
+		if(entity instanceof PlayerEntity && !entity.hasEffect(EffectRegistry.HEAT_RESISTANCE.get()))
 		{
-			World world = entity.getEntityWorld();
+			World world = entity.getCommandSenderWorld();
 			PlayerEntity player = (PlayerEntity) entity;
 			
 			if (DamageUtil.isModDangerous(world) && DamageUtil.healthAboveDifficulty(world, player) && !player.isSleeping())
 			{
-				player.attackEntityFrom(DamageSources.HYPERTHERMIA, 1.0f);
+				player.hurt(DamageSources.HYPERTHERMIA, 1.0f);
 			}
 		}
 	}
 	
 	@Override
-	public boolean isReady(int duration, int amplifier) 
+	public boolean isDurationEffectTick(int duration, int amplifier) 
 	{
 		int time = 50 >> amplifier;
 		return time > 0 ? duration % time == 0 : true;

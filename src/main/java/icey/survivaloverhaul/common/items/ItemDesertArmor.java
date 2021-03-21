@@ -13,7 +13,7 @@ public class ItemDesertArmor extends ArmorItem
 {
 	public ItemDesertArmor(IArmorMaterial material, EquipmentSlotType slot)
 	{
-		super(material, slot, new Item.Properties().group(ItemGroup.COMBAT));
+		super(material, slot, new Item.Properties().tab(ItemGroup.TAB_COMBAT));
 	}
 	
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type)

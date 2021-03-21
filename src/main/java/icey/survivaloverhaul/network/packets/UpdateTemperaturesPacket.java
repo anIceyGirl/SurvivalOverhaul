@@ -27,12 +27,12 @@ public class UpdateTemperaturesPacket
 	
 	public static UpdateTemperaturesPacket decode(PacketBuffer buffer)
 	{
-		return new UpdateTemperaturesPacket(buffer.readCompoundTag());
+		return new UpdateTemperaturesPacket(buffer.readNbt());
 	}
 	
 	public static void encode(UpdateTemperaturesPacket message, PacketBuffer buffer)
 	{
-		buffer.writeCompoundTag(message.compound);
+		buffer.writeNbt(message.compound);
 	}
 	
 	public static void handle(UpdateTemperaturesPacket message, Supplier<NetworkEvent.Context> supplier)

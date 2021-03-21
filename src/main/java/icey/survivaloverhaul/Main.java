@@ -65,6 +65,7 @@ import icey.survivaloverhaul.registry.TemperatureModifierRegistry;
 import icey.survivaloverhaul.util.WorldUtil;
 import icey.survivaloverhaul.util.internal.TemperatureUtilInternal;
 
+@SuppressWarnings("unused")
 @Mod(Main.MOD_ID)
 @Mod.EventBusSubscriber(modid = Main.MOD_ID)
 public class Main
@@ -186,8 +187,8 @@ public class Main
 	
 	private void clientEvents(final FMLClientSetupEvent event)
 	{
-		RenderTypeLookup.setRenderLayer(BlockRegistry.COOLING_COIL.get(), RenderType.getCutout());
-		RenderTypeLookup.setRenderLayer(BlockRegistry.HEATING_COIL.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(BlockRegistry.COOLING_COIL.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(BlockRegistry.HEATING_COIL.get(), RenderType.cutout());
 		
 		event.enqueueWork(() -> 
 		{
@@ -211,18 +212,18 @@ public class Main
 			@Override
 			public void run()
 			{
-				ItemModelsProperties.registerProperty(ItemRegistry.THERMOMETER.get(), new ResourceLocation("temperature"), new IItemPropertyGetter()
+				ItemModelsProperties.register(ItemRegistry.THERMOMETER.get(), new ResourceLocation("temperature"), new IItemPropertyGetter()
 					{
 						@OnlyIn(Dist.CLIENT)
 						@Override
 						public float call(ItemStack stack, ClientWorld clientWorld, LivingEntity entity)
 						{
 							World world = clientWorld;
-							Entity holder = (Entity) (entity != null ? entity : stack.getItemFrame());
+							Entity holder = (Entity) (entity != null ? entity : stack.getFrame());
 							
 							if (world == null && holder != null)
 							{
-								world = holder.world;
+								world = holder.level;
 							}
 							
 							if (world == null)

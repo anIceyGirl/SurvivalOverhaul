@@ -40,7 +40,7 @@ public class BlockRegistry
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Main.MOD_ID);
 	
 	public static final RegistryObject<BlockGeneric> CINNABAR_ORE = BLOCKS.register("cinnabar_ore", () -> 
-	new BlockGeneric(Material.ROCK, "pickaxe", 2, 3, 3, SoundType.STONE, new OreOptions(new Category[] {Category.NETHER,Category.THEEND}, Decoration.UNDERGROUND_ORES, 4, 25, 50, 5)));// veinsize lower than 4 or 3 breaks it
+	new BlockGeneric(Material.STONE, "pickaxe", 2, 3, 3, SoundType.STONE, new OreOptions(new Category[] {Category.NETHER,Category.THEEND}, Decoration.UNDERGROUND_ORES, 4, 25, 50, 5)));// veinsize lower than 4 or 3 breaks it
 	
 	public static final RegistryObject<Block> HEATING_COIL = BLOCKS.register("heating_coil", () -> new BlockTemperatureCoil(BlockTemperatureCoil.CoilType.HEATING));
 	public static final RegistryObject<Block> COOLING_COIL = BLOCKS.register("cooling_coil", () -> new BlockTemperatureCoil(BlockTemperatureCoil.CoilType.COOLING));

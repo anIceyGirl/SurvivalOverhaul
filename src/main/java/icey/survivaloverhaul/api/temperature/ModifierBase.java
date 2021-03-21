@@ -1,6 +1,5 @@
 package icey.survivaloverhaul.api.temperature;
 
-import icey.survivaloverhaul.Main;
 import icey.survivaloverhaul.api.config.json.temperature.JsonBiomeIdentity;
 import icey.survivaloverhaul.config.json.JsonConfig;
 import net.minecraft.entity.player.PlayerEntity;
@@ -80,7 +79,7 @@ public abstract class ModifierBase extends ForgeRegistryEntry<ModifierBase>
 		
 		// If we're in a dimension that has a ceiling,
 		// then just return the default value.
-		if(world.getDimensionType().getHasCeiling())
+		if(world.dimensionType().hasCeiling())
 		{
 			return temperature;
 		}
@@ -89,7 +88,7 @@ public abstract class ModifierBase extends ForgeRegistryEntry<ModifierBase>
 		// that there's probably an easier way to do this
 		// that takes into account distance inside of a cave,
 		// but fuck if I know
-		if(world.canSeeSky(pos) || world.canSeeSky(pos.up()))
+		if(world.canSeeSky(pos) || world.canSeeSky(pos.above()))
 		{
 			return temperature;
 		}
@@ -119,7 +118,7 @@ public abstract class ModifierBase extends ForgeRegistryEntry<ModifierBase>
 			return clampTemperature(identity.temperature);
 		}
 		
-		return clampTemperature(biome.getTemperature());
+		return clampTemperature(biome.getBaseTemperature());
 	}
 	
 	protected float clampTemperature(float temp)

@@ -63,7 +63,7 @@ public class ModCapabilities
 	@SubscribeEvent
 	public static void onPlayerTick(PlayerTickEvent event)
 	{
-		if (event.player.world.isRemote)
+		if (event.player.level.isClientSide)
 		{
 			// Client Side
 			return;
@@ -72,7 +72,7 @@ public class ModCapabilities
 		{
 			// Server Side
 			PlayerEntity player = event.player;
-			World world = player.world;
+			World world = player.level;
 			
 			if (Config.Baked.temperatureEnabled && !shouldSkipTick(player))
 			{
@@ -112,7 +112,7 @@ public class ModCapabilities
 	@SubscribeEvent
 	public static void onLivingEntityUseItemFinish(LivingEntityUseItemEvent event)
 	{
-		if (event.getEntityLiving() instanceof PlayerEntity && !event.getEntityLiving().world.isRemote)
+		if (event.getEntityLiving() instanceof PlayerEntity && !event.getEntityLiving().level.isClientSide)
 		{
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 			
@@ -153,7 +153,7 @@ public class ModCapabilities
 				
 				newCap.setMaxHealth(oldHearts - Config.Baked.heartsLostOnDeath);
 				
-				newCap.updateMaxHealth(player.getEntityWorld(), player);
+				newCap.updateMaxHealth(player.getCommandSenderWorld(), player);
 				sendHeartsUpdate(player);
 			}
 		}
@@ -172,7 +172,7 @@ public class ModCapabilities
 				HeartModifierCapability oldCap = CapabilityUtil.getHeartModCapability(orig);
 				HeartModifierCapability newCap = CapabilityUtil.getHeartModCapability(player);
 				newCap.readNBT(oldCap.writeNBT());
-				newCap.updateMaxHealth(player.getEntityWorld(), player);
+				newCap.updateMaxHealth(player.getCommandSenderWorld(), player);
 				sendHeartsUpdate(player);
 			}
 			
@@ -188,7 +188,7 @@ public class ModCapabilities
 
 	private static void sendTemperatureUpdate(PlayerEntity player)
 	{
-		if (!player.world.isRemote())
+		if (!player.level.isClientSide())
 		{
 			UpdateTemperaturesPacket packet = new UpdateTemperaturesPacket(Main.TEMPERATURE_CAP.getStorage().writeNBT(Main.TEMPERATURE_CAP, CapabilityUtil.getTempCapability(player), null));
 			
@@ -198,7 +198,7 @@ public class ModCapabilities
 
 	private static void sendHeartsUpdate(PlayerEntity player)
 	{
-		if (!player.world.isRemote())
+		if (!player.level.isClientSide())
 		{
 			UpdateHeartsPacket packet = new UpdateHeartsPacket(Main.HEART_MOD_CAP.getStorage().writeNBT(Main.HEART_MOD_CAP, CapabilityUtil.getHeartModCapability(player), null));
 			
@@ -208,7 +208,7 @@ public class ModCapabilities
 
 	private static void sendWetnessUpdate(PlayerEntity player)
 	{
-		if (!player.world.isRemote())
+		if (!player.level.isClientSide())
 		{
 			UpdateWetnessPacket packet = new UpdateWetnessPacket(Main.WETNESS_CAP.getStorage().writeNBT(Main.WETNESS_CAP, CapabilityUtil.getWetnessCapability(player), null));
 			

@@ -32,7 +32,7 @@ public class WetModifier extends ModifierBase
 			return 0.0f;
 		
 		FluidState state = world.getFluidState(pos);
-		Fluid fluid = state.getFluid();
+		Fluid fluid = state.getType();
 		
 		if (!state.isEmpty())
 		{
@@ -48,7 +48,7 @@ public class WetModifier extends ModifierBase
 			}
 		}
 		
-		if (fluid.isEquivalentTo(Fluids.WATER) || fluid.isEquivalentTo(Fluids.FLOWING_WATER))
+		if (fluid.isSame(Fluids.WATER) || fluid.isSame(Fluids.FLOWING_WATER))
 			return (float) Config.Baked.wetMultiplier;
 		else if (world.isRainingAt(pos))
 			return (float) Config.Baked.wetMultiplier;
@@ -62,13 +62,13 @@ public class WetModifier extends ModifierBase
 		switch (Config.Baked.wetnessMode)
 		{
 			case SIMPLE:
-				float worldInfluence = this.getWorldInfluence(player.world, player.getPosition());
+				float worldInfluence = this.getWorldInfluence(player.level, player.blockPosition());
 				
-				if (player.getRidingEntity() != null && worldInfluence != 0)
+				if (player.getVehicle() != null && worldInfluence != 0)
 				{
 					// If the player is in a boat, cancel out the effect
 					
-					if (player.getRidingEntity() instanceof BoatEntity)
+					if (player.getVehicle() instanceof BoatEntity)
 					{
 						return (float) -worldInfluence;
 					}

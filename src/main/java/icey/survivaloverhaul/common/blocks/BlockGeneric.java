@@ -7,6 +7,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.common.ToolType;
 
+import net.minecraft.block.AbstractBlock;
+
 public class BlockGeneric extends Block
 {
 	public OreOptions OO;
@@ -19,10 +21,10 @@ public class BlockGeneric extends Block
 	public BlockGeneric(Material materialIn, String toolUsed, int toolStrength, float hardness, float resistance, SoundType sound, OreOptions OO)
 	{
 		super(
-			Block.Properties
-				.create(materialIn)
+			AbstractBlock.Properties
+				.of(materialIn)
 				.sound(sound)
-				.hardnessAndResistance(hardness, resistance)
+				.strength(hardness, resistance)
 				.harvestTool(ToolType.get(toolUsed))
 			);
 		if (OO != null)

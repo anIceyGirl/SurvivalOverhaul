@@ -18,7 +18,7 @@ public class TemperatureUtilInternal implements ITemperatureUtil
 	public int getPlayerTargetTemperature(PlayerEntity player)
 	{
 		float sum = 0.0f;
-		World world = player.getEntityWorld();
+		World world = player.getCommandSenderWorld();
 		BlockPos pos = WorldUtil.getSidedBlockPos(world, player);
 		
 		for(ModifierBase modifier : GameRegistry.findRegistry(ModifierBase.class).getValues())

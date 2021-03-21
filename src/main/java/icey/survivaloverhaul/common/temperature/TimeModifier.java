@@ -17,12 +17,12 @@ public class TimeModifier extends ModifierBase
 	public float getWorldInfluence(World world, BlockPos pos)
 	{
 		// This effect should only be provided in surface worlds
-		if(world.getDimensionType().getHasCeiling())
+		if(world.dimensionType().hasCeiling())
 		{
 			return 0.0f;
 		}
 		
-		long time = world.getWorldInfo().getDayTime();
+		long time = world.getLevelData().getDayTime();
 		
 		float timeTemperature = (Math.abs(((time % 12000.0f) - 6000.0f) / 6000.0f) - 1.0f) * (float) Config.Baked.timeMultiplier;
 		
@@ -34,7 +34,7 @@ public class TimeModifier extends ModifierBase
 		float biomeMultiplier = 1.0f + (Math.abs(normalizeToPosNeg(getTempForBiome(world.getBiome(pos)))) * ((float)Config.Baked.biomeTimeMultiplier - 1.0f));
 		timeTemperature *= biomeMultiplier;
 		
-		if(timeTemperature > 0 && Config.Baked.timeShadeModifier != 0 && !world.canSeeSky(pos.up()))
+		if(timeTemperature > 0 && Config.Baked.timeShadeModifier != 0 && !world.canSeeSky(pos.above()))
 		{
 			timeTemperature = Math.max(0, timeTemperature + Config.Baked.timeShadeModifier);
 		}

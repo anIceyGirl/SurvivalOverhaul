@@ -21,13 +21,13 @@ public class ArmorInsulationModifier extends ModifierBase
 	@Override
 	public float getPlayerInfluence(PlayerEntity player)
 	{
-		int worldTemperature = TemperatureUtil.getWorldTemperature(player.world, player.getPosition());
+		int worldTemperature = TemperatureUtil.getWorldTemperature(player.level, player.blockPosition());
 		int diff = TemperatureEnum.NORMAL.getMiddle() - worldTemperature;
 		
-		diff *= checkArmorSlot(player.getItemStackFromSlot(EquipmentSlotType.HEAD));
-		diff *= checkArmorSlot(player.getItemStackFromSlot(EquipmentSlotType.CHEST));
-		diff *= checkArmorSlot(player.getItemStackFromSlot(EquipmentSlotType.LEGS));
-		diff *= checkArmorSlot(player.getItemStackFromSlot(EquipmentSlotType.FEET));
+		diff *= checkArmorSlot(player.getItemBySlot(EquipmentSlotType.HEAD));
+		diff *= checkArmorSlot(player.getItemBySlot(EquipmentSlotType.CHEST));
+		diff *= checkArmorSlot(player.getItemBySlot(EquipmentSlotType.LEGS));
+		diff *= checkArmorSlot(player.getItemBySlot(EquipmentSlotType.FEET));
 		
 		return -diff;
 	}

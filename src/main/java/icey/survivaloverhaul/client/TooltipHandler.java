@@ -67,9 +67,9 @@ public class TooltipHandler
 				String tempTxt = (temperature % 1.0f == 0f ? (int) Math.abs(temperature) : Math.abs(temperature) ) + " ";
 				
 				ITextComponent text = new StringTextComponent("+")
-						.mergeStyle(TextFormatting.BLUE)
-						.appendString(tempTxt)
-						.appendSibling(tempTranslation);
+						.withStyle(TextFormatting.BLUE)
+						.append(tempTxt)
+						.append(tempTranslation);
 				
 				tooltip.add(text);
 			}

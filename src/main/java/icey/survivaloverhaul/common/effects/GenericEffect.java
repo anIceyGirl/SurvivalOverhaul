@@ -13,13 +13,13 @@ public class GenericEffect extends Effect
 	}
 	
 	@Override
-	public void performEffect(LivingEntity entity, int amplifier)
+	public void applyEffectTick(LivingEntity entity, int amplifier)
 	{
 		
 	}
 	
 	@Override
-	public boolean isReady(int duration, int amplifier) 
+	public boolean isDurationEffectTick(int duration, int amplifier) 
 	{
 		return false;
 	}

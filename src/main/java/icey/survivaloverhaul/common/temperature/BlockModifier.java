@@ -82,7 +82,7 @@ public class BlockModifier extends ModifierBase
 			{
 				for (int z = -horizontalDist; z <= horizontalDist; z++)
 				{
-					final BlockPos blockPos = pos.add(x, y, z);
+					final BlockPos blockPos = pos.offset(x, y, z);
 					final BlockState blockState = world.getBlockState(blockPos);
 					final Block block = blockState.getBlock();
 					
@@ -126,9 +126,9 @@ public class BlockModifier extends ModifierBase
 			{
 				for (int z = -horizontalDist; z <= horizontalDist; z++)
 				{
-					final BlockPos blockPos = pos.add(x, y, z);
+					final BlockPos blockPos = pos.offset(x, y, z);
 					final FluidState fluidState = world.getFluidState(blockPos);
-					final Fluid fluid = fluidState.getFluid();
+					final Fluid fluid = fluidState.getType();
 					
 					for (Map.Entry<String, JsonTemperature> entry : JsonConfig.fluidTemperatures.entrySet())
 					{
@@ -151,7 +151,7 @@ public class BlockModifier extends ModifierBase
 		{
 			for (int z = -3; z <= 3; z++)
 			{
-				checkChunkAndProcess(world, pos.add(x * 16, 0, z * 16), pos);
+				checkChunkAndProcess(world, pos.offset(x * 16, 0, z * 16), pos);
 			}
 		}
 	}
@@ -185,9 +185,9 @@ public class BlockModifier extends ModifierBase
 		{
 			if (WorldUtil.isChunkLoaded(world, pos))
 			{
-				Chunk chunk = world.getChunkProvider().getChunk(pos.getX() >> 4, pos.getZ() >> 4, false);
+				Chunk chunk = world.getChunkSource().getChunk(pos.getX() >> 4, pos.getZ() >> 4, false);
 				
-				for (Map.Entry<BlockPos, TileEntity> entry : chunk.getTileEntityMap().entrySet())
+				for (Map.Entry<BlockPos, TileEntity> entry : chunk.getBlockEntities().entrySet())
 				{
 					processTemp(checkTileEntity(world, entry.getKey(), entry.getValue(), selfPos));
 				}
@@ -201,7 +201,7 @@ public class BlockModifier extends ModifierBase
 	
 	private float checkTileEntity(World world, BlockPos pos, TileEntity tileEntity, BlockPos selfPos)
 	{
-		double distance = pos.distanceSq(selfPos);
+		double distance = pos.distSqr(selfPos);
 		if (distance < 2500.0d)
 		{
 			// Within 50 blocks

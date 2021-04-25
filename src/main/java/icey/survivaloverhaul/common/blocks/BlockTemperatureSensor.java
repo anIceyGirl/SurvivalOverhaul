@@ -33,17 +33,7 @@ public class BlockTemperatureSensor extends Block
 {
 	public static final DirectionProperty DIRECTION = BlockStateProperties.FACING;
 	public static final BooleanProperty INVERTED = BlockStateProperties.INVERTED;
-	private int temperature;
-	
-	private static final VoxelShape[] SHAPES = new VoxelShape[]
-			{
-					Block.box(0d, 0d, 0d, 16d, 8d, 16d), // DOWN
-					//Block.makeCuboidShape(1,2,3,4,5,6), // UP
-					//Block.makeCuboidShape(1,2,3,4,5,6), // NORTH
-					//Block.makeCuboidShape(1,2,3,4,5,6), // SOUTH
-					//Block.makeCuboidShape(1,2,3,4,5,6), // WEST
-					//Block.makeCuboidShape(1,2,3,4,5,6), // EAST
-			};
+	private int temperature = 0;
 
 	public BlockTemperatureSensor() 
 	{
@@ -57,7 +47,6 @@ public class BlockTemperatureSensor extends Block
 		try 
 		{
 			int templ = 0;
-			//should give an option for a binary response
 			if (!state.getValue(INVERTED)) //false
 				templ = TemperatureUtil.clampTemperature(TemperatureUtil.getWorldTemperature(worldIn, pos)) / 2;
 			else
@@ -67,7 +56,6 @@ public class BlockTemperatureSensor extends Block
 			{
 				temperature = templ;
 				Blocks.REDSTONE_WIRE.defaultBlockState().neighborChanged(worldIn, pos, asBlock(), pos, false);//possibly not efficient
-				//System.out.println("Change Temp");
 			}
 			
 			worldIn.getBlockTicks().scheduleTick(pos, this, 15);
@@ -93,7 +81,7 @@ public class BlockTemperatureSensor extends Block
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
 	{
-		return SHAPES[0];
+		return Block.box(0d, 0d, 0d, 16d, 8d, 16d);
 	}
 	
 	@Override
@@ -122,15 +110,15 @@ public class BlockTemperatureSensor extends Block
 	
 	@Override
 	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) 
-	{	//something here is null on server when getWorldTemperature is called (same in tick). guessing pos?
-		try 
+	{	
+		//for some reason the biome registry name is null on dedicated server when getWorldTemperature is called.
+
+		if (worldIn.getBiome(pos).getRegistryName() == null) 
 		{
-			temperature = TemperatureUtil.clampTemperature(TemperatureUtil.getWorldTemperature(worldIn, pos)) / 2;
-			worldIn.getBlockTicks().scheduleTick(pos, this, 15);
+			worldIn.getBlockTicks().scheduleTick(pos, this, 15);// after initial placement it fixes itself 
+			return;
 		}
-		catch(Exception e) 
-		{
-			Main.LOGGER.error(e);
-		}
+		temperature = TemperatureUtil.clampTemperature(TemperatureUtil.getWorldTemperature(worldIn, pos)) / 2;
+		worldIn.getBlockTicks().scheduleTick(pos, this, 15);
 	}
 }

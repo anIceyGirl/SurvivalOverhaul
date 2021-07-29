@@ -9,7 +9,6 @@ import icey.survivaloverhaul.api.temperature.TemperatureUtil;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,7 +37,7 @@ public class BlockTemperatureSensor extends Block
 	public BlockTemperatureSensor() 
 	{
 		super(AbstractBlock.Properties.of(Material.WOOD).instabreak().noOcclusion());
-		this.registerDefaultState(this.stateDefinition.any().setValue(DIRECTION, Direction.DOWN).setValue(INVERTED, Boolean.valueOf(false)));
+		this.registerDefaultState(this.stateDefinition.any().setValue(INVERTED, Boolean.valueOf(false)).setValue(DIRECTION, Direction.DOWN));
 	}
 	
 	@Override
@@ -55,7 +54,7 @@ public class BlockTemperatureSensor extends Block
 			if (temperature != templ) 
 			{
 				temperature = templ;
-				Blocks.REDSTONE_WIRE.defaultBlockState().neighborChanged(worldIn, pos, asBlock(), pos, false);//possibly not efficient
+				worldIn.blockUpdated(pos, this);
 			}
 			
 			worldIn.getBlockTicks().scheduleTick(pos, this, 15);
@@ -69,7 +68,7 @@ public class BlockTemperatureSensor extends Block
 	@Override
 	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) 
 	{
-		builder.add(DIRECTION).add(INVERTED);
+		builder.add(INVERTED).add(DIRECTION);
 	}
 	
 	@Override
